@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>自动生成V字（定位）</title>
+</head>
+<style>
+    div{
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        background: red;
+        color: #fff;
+        text-align: center;
+        line-height: 100px;
+    }
+</style>
+<script>
+    window.onload = function () {
+        var aDiv = document.getElementsByTagName('div');
+        var btn = document.getElementById('btn');
+        var html = '';
+        function getsStyle(obj,sty){
+            if(obj.currentStyle){
+                return obj.currentStyle[sty];
+                //IE下兼容
+            }else{
+                return getComputedStyle(obj,null)[sty];
+                //非IE下兼容
+            }
+        }
+        btn.onclick= function () {
+            for (var i=0; i<5 ; i++){
+                html += '<div>'+i+'</div>';
+            }
+            document.body.innerHTML += html;
+            for (var i=0; i<aDiv.length; i++){
+                if(i > aDiv.length/2){
+                    aDiv[i].style.top = 50+parseInt(getsStyle(aDiv[i],'height')) * (aDiv.length-i-1)+'px';
+                }
+                else{
+                    aDiv[i].style.top = 50+parseInt(getsStyle(aDiv[i],'height')) * i+'px';
+                }
+                aDiv[i].style.left = parseInt(getsStyle(aDiv[i],'width')) * i+'px';
+            }
+        }
+
+    }
+</script>
+<body>
+<input id="btn" type="button" value="自动生成V">
+</body>
+</html>
